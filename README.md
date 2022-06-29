@@ -4,6 +4,10 @@ Implementation of _MVC, MVP, MVVM, MVI_ patterns using Clean Architecture and fu
 ## About
 The application that allows to get random image from [api](https://picsum.photos/) and add it to favorites.
 
+![Full architecture diagram](../main/media/mvarchitecture_full_scheme.png)
+
+**_*Some details have been omitted as the purpose is to show the direction of the dependencies._**
+
 ## Topic
 - Clean Architecture
 - MVC
