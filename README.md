@@ -6,7 +6,7 @@ The application that allows to get random image from [api](https://picsum.photos
 
 ![Full architecture diagram](../main/media/mvarchitecture_full_scheme.png)
 
-**_*Some details have been omitted as the purpose is to show the direction of the dependencies._**
+**_*Some details have been omitted to provide a better visibility of the direction of the dependencies._**
 
 ## Topic
 - Clean Architecture
