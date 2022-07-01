@@ -13,8 +13,8 @@ private val DarkColorPalette = darkColors(
 )
 
 private val LightColorPalette = lightColors(
-    primary = AeroBlue,
-    primaryVariant = Honeydew,
+    primary = MidnightGreenEagleGreen,
+    primaryVariant = GunMetal,
     secondary = Timberwolf
 
     /* Other default colors to override
