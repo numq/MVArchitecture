@@ -1,5 +1,6 @@
 package com.numq.mvarchitecture.presentation.component.paging
 
+import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.*
@@ -37,14 +38,16 @@ fun <T> PagingList(
         mutableStateOf(0)
     }
 
-    val skip = initPageSize + page * pageSize
-
-    LaunchedEffect(Unit) {
-        loadData(0, initPageSize)
+    val skip = when(page){
+        0 -> 0
+        1 -> initPageSize
+        else -> initPageSize + (pageSize * page)
     }
+    val limit = if (page > 0) pageSize else initPageSize
 
-    LaunchedEffect(page) {
-        loadData(skip, pageSize)
+    LaunchedEffect(Unit, page) {
+        Log.e(javaClass.simpleName, "$page,$skip,$limit")
+        loadData(skip, limit)
     }
 
     LaunchedEffect(currentIndex) {
