@@ -52,7 +52,7 @@ fun AppRouter() {
             ) {
                 NavHost(
                     navController,
-                    startDestination = Route.Mvi.destination
+                    startDestination = Route.Mvc.destination
                 ) {
                     composable(Route.Mvc.destination) {
                         MvcScreen(Route.Mvc, scaffoldState)
