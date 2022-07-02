@@ -32,9 +32,7 @@ constructor(
 
     private val onFavorites: (List<Image>) -> Unit = { list ->
         _favorites.update {
-            val firstIndex = it.indexOfFirst { image -> list.contains(image) }
-            val newList = if (firstIndex < 0) it else it.subList(0, firstIndex)
-            newList.plus(list).distinct()
+            it.plus(list).distinctBy { img -> img.id }
         }
     }
 
@@ -48,10 +46,7 @@ constructor(
     private val onUndoRemoval: (Image) -> Unit = { image ->
         indexToRemove?.let { idx ->
             _favorites.update {
-                it.toMutableList().apply {
-                    add(idx, image)
-                    toList()
-                }
+                it.subList(0, idx).plus(image).plus(it.subList(idx, it.size))
             }
         }
         indexToRemove = null

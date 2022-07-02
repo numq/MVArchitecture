@@ -24,9 +24,8 @@ class FavoritesFeature constructor(
             getFavorites.invoke(Pair(event.skip, event.limit)) {
                 it.fold(onError) { list ->
                     reduce { oldState ->
-                        val firstIndex = oldState.favorites.indexOfFirst { image -> list.contains(image) }
-                        val newList = if (firstIndex < 0) oldState.favorites else oldState.favorites.subList(0, firstIndex)
-                        oldState.copy(favorites = newList.plus(list).distinct())
+                        oldState.copy(
+                            favorites = oldState.favorites.plus(list).distinctBy { img -> img.id })
                     }
                 }
             }

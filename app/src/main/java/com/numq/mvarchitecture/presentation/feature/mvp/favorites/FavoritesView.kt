@@ -17,9 +17,7 @@ class FavoritesView : FavoritesContract.View {
 
     override fun onFavorites(images: List<Image>) {
         _favorites.update {
-            val firstIndex = it.indexOfFirst { image -> images.contains(image) }
-            val newList = if (firstIndex < 0) it else it.subList(0, firstIndex)
-            newList.plus(images).distinct()
+            it.plus(images).distinctBy { img -> img.id }
         }
     }
 
@@ -33,10 +31,7 @@ class FavoritesView : FavoritesContract.View {
     override fun onUndoRemoval(image: Image) {
         indexToRemove?.let { idx ->
             _favorites.update {
-                it.toMutableList().apply {
-                    add(idx, image)
-                    toList()
-                }
+                it.subList(0, idx).plus(image).plus(it.subList(idx, it.size))
             }
         }
         indexToRemove = null
