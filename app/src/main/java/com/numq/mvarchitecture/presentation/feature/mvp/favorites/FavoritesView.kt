@@ -17,7 +17,9 @@ class FavoritesView : FavoritesContract.View {
 
     override fun onFavorites(images: List<Image>) {
         _favorites.update {
-            it.plus(images).distinct()
+            val firstIndex = it.indexOfFirst { image -> images.contains(image) }
+            val newList = if (firstIndex < 0) it else it.subList(0, firstIndex)
+            newList.plus(images).distinct()
         }
     }
 
