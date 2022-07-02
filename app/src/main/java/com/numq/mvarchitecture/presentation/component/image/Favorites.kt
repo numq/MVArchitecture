@@ -1,6 +1,8 @@
 package com.numq.mvarchitecture.presentation.component.image
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.GridView
@@ -27,6 +29,8 @@ fun Favorites(
 
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
 
     val (gridMode, setGridMode) = rememberSaveable {
         mutableStateOf(false)
@@ -42,6 +46,8 @@ fun Favorites(
             )
             if (result == SnackbarResult.ActionPerformed) {
                 undoRemoval(img)
+                if (gridMode) gridState.animateScrollToItem(favorites.indexOf(img))
+                else listState.animateScrollToItem(favorites.indexOf(img))
             }
         }
     }
@@ -65,6 +71,8 @@ fun Favorites(
         ) {
             PagingList(
                 Modifier.fillMaxSize(),
+                listState,
+                gridState,
                 favorites,
                 getFavorites,
                 AppConstants.Paging.DEFAULT_SIZE,

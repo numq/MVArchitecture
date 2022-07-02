@@ -1,10 +1,10 @@
 package com.numq.mvarchitecture.presentation.component.paging
 
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -14,6 +14,8 @@ import androidx.compose.ui.Modifier
 @Composable
 fun <T> PagingList(
     modifier: Modifier = Modifier,
+    listState: LazyListState = rememberLazyListState(),
+    gridState: LazyGridState = rememberLazyGridState(),
     data: List<T>,
     loadData: (Int, Int) -> Unit,
     pageSize: Int,
@@ -54,7 +56,7 @@ fun <T> PagingList(
     }
 
     if (gridMode) {
-        LazyVerticalGrid(GridCells.Fixed(2), modifier) {
+        LazyVerticalGrid(GridCells.Fixed(2), modifier, state = gridState) {
             itemsIndexed(data) { idx, item ->
                 setCurrentIndex(idx)
                 setMaxIndex(maxOf(maxIndex, idx))
@@ -62,7 +64,7 @@ fun <T> PagingList(
             }
         }
     } else {
-        LazyColumn(modifier) {
+        LazyColumn(modifier, state = listState) {
             itemsIndexed(data) { idx, item ->
                 setCurrentIndex(idx)
                 setMaxIndex(maxOf(maxIndex, idx))
