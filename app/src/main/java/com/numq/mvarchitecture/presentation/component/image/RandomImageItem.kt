@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
@@ -37,7 +38,7 @@ fun RandomImageItem(image: Image, painter: Painter) {
                 .alpha(.3f)
         )
         Box(contentAlignment = Alignment.TopEnd) {
-            Image(painter = painter, "")
+            Image(painter = painter, "", modifier = Modifier.fillMaxWidth())
             AnimatedVisibility(visible = image.isFavorite) {
                 Icon(
                     Icons.Rounded.Favorite,
