@@ -24,8 +24,7 @@ class FavoritesFeature constructor(
             getFavorites.invoke(Pair(event.skip, event.limit)) {
                 it.fold(onError) { list ->
                     reduce { oldState ->
-                        oldState.copy(
-                            favorites = oldState.favorites.plus(list).distinctBy { img -> img.id })
+                        oldState.copy(favorites = list)
                     }
                 }
             }
@@ -46,11 +45,12 @@ class FavoritesFeature constructor(
                 it.fold(onError) { image ->
                     indexToRemove?.let { idx ->
                         reduce { oldState ->
-                            oldState.copy(favorites = oldState.favorites.toMutableList().apply {
-                                add(idx, image)
-                                toList()
-                            })
+                            oldState.copy(
+                                favorites = oldState.favorites.subList(0, idx).plus(image)
+                                    .plus(oldState.favorites.subList(idx, oldState.favorites.size))
+                            )
                         }
+                        indexToRemove = null
                     }
                 }
             }

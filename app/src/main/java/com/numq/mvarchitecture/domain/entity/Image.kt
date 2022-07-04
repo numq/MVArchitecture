@@ -20,5 +20,7 @@ data class Image(
     @SerializedName("url") var url: String,
     @ColumnInfo(name = "download_url")
     @SerializedName("download_url") var downloadUrl: String,
+    @ColumnInfo(name = "added_at")
+    val addedAt: Long = 0L,
     var isFavorite: Boolean = false
 )

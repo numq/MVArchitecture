@@ -116,9 +116,6 @@ fun RandomImage(
                     model = image.downloadUrl,
                     contentDescription = "",
                     contentScale = ContentScale.FillWidth,
-                    onError = {
-//                        onError(Exception(it.result.throwable.localizedMessage))
-                    },
                     onSuccess = {
                         setImageLoaded(true)
                     },

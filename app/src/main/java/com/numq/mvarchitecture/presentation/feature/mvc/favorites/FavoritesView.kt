@@ -17,14 +17,12 @@ class FavoritesView : View.Favorites {
     override val favorites = _favorites.asStateFlow()
 
     override fun onFavorites(images: List<Image>) {
-        _favorites.update {
-            it.plus(images).distinctBy { img -> img.id }
-        }
+        _favorites.update { images }
     }
 
     override fun onRemoveFavorite(image: Image) {
-        indexToRemove = favorites.value.indexOfFirst { it.id == image.id }
         _favorites.update {
+            indexToRemove = it.indexOfFirst { img -> img.id == image.id }
             it.filter { img -> img.id != image.id }
         }
     }
@@ -34,8 +32,8 @@ class FavoritesView : View.Favorites {
             _favorites.update {
                 it.subList(0, idx).plus(image).plus(it.subList(idx, it.size))
             }
+            indexToRemove = null
         }
-        indexToRemove = null
     }
 
 }

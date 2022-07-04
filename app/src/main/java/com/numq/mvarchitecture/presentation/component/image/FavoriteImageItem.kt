@@ -8,12 +8,15 @@ import coil.compose.AsyncImage
 import com.numq.mvarchitecture.domain.entity.Image
 
 @Composable
-fun FavoriteImageItem(modifier: Modifier = Modifier, image: Image, onItemClick: (Image) -> Unit) {
+fun FavoriteImageItem(
+    modifier: Modifier = Modifier,
+    image: Image,
+    onItemClick: (Image) -> Unit
+) {
     AsyncImage(
         model = image.downloadUrl,
-        "",
-        contentScale = ContentScale.FillWidth,
-        modifier = modifier.clickable {
-            onItemClick(image)
-        })
+        contentDescription = "",
+        modifier = modifier.clickable { onItemClick(image) },
+        contentScale = ContentScale.FillWidth
+    )
 }

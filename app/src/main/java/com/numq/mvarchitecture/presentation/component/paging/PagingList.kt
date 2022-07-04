@@ -1,6 +1,5 @@
 package com.numq.mvarchitecture.presentation.component.paging
 
-import android.util.Log
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.grid.*
@@ -20,10 +19,9 @@ fun <T> PagingList(
     data: List<T>,
     loadData: (Int, Int) -> Unit,
     pageSize: Int,
-    initPageSize: Int = pageSize * 3,
     pagePreload: Int = 2,
     gridMode: Boolean,
-    onItemClick: @Composable (T) -> Unit = {}
+    onItem: @Composable (T) -> Unit = {}
 ) {
 
     val (page, setPage) = remember {
@@ -38,16 +36,19 @@ fun <T> PagingList(
         mutableStateOf(0)
     }
 
-    val skip = when(page){
-        0 -> 0
-        1 -> initPageSize
-        else -> initPageSize + (pageSize * page)
+    fun processIndex(
+        currentIndex: Int,
+        minAnchor: Int,
+        maxAnchor: Int,
+        pageIncrement: () -> Unit,
+        pageDecrement: () -> Unit
+    ) {
+        if (currentIndex < minAnchor) pageDecrement()
+        if (currentIndex > maxAnchor) pageIncrement()
     }
-    val limit = if (page > 0) pageSize else initPageSize
 
     LaunchedEffect(Unit, page) {
-        Log.e(javaClass.simpleName, "$page,$skip,$limit")
-        loadData(skip, limit)
+        loadData(page * pageSize, pageSize)
     }
 
     LaunchedEffect(currentIndex) {
@@ -63,7 +64,7 @@ fun <T> PagingList(
             itemsIndexed(data) { idx, item ->
                 setCurrentIndex(idx)
                 setMaxIndex(maxOf(maxIndex, idx))
-                onItemClick(item)
+                onItem(item)
             }
         }
     } else {
@@ -71,19 +72,8 @@ fun <T> PagingList(
             itemsIndexed(data) { idx, item ->
                 setCurrentIndex(idx)
                 setMaxIndex(maxOf(maxIndex, idx))
-                onItemClick(item)
+                onItem(item)
             }
         }
     }
-}
-
-fun processIndex(
-    currentIndex: Int,
-    minAnchor: Int,
-    maxAnchor: Int,
-    pageIncrement: () -> Unit,
-    pageDecrement: () -> Unit
-) {
-    if (currentIndex < minAnchor) pageDecrement()
-    if (currentIndex > maxAnchor) pageIncrement()
 }
