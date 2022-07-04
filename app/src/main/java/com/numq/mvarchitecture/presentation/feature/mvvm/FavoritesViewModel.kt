@@ -19,7 +19,7 @@ constructor(
     private val _error = MutableSharedFlow<Exception?>()
     val error = _error.asSharedFlow()
 
-    private val _favorites = MutableStateFlow<List<Image>>(emptyList())
+    private var _favorites = MutableStateFlow<List<Image>>(emptyList())
     val favorites = _favorites.asStateFlow()
 
     private var indexToRemove: Int? = null
@@ -31,14 +31,12 @@ constructor(
     }
 
     private val onFavorites: (List<Image>) -> Unit = { list ->
-        _favorites.update {
-            it.plus(list).distinctBy { img -> img.id }
-        }
+        _favorites.update { list }
     }
 
     private val onRemoveFavorite: (Image) -> Unit = { image ->
-        indexToRemove = favorites.value.indexOfFirst { it.id == image.id }
         _favorites.update {
+            indexToRemove = it.indexOfFirst { img -> img.id == image.id }
             it.filter { img -> img.id != image.id }
         }
     }
@@ -48,8 +46,8 @@ constructor(
             _favorites.update {
                 it.subList(0, idx).plus(image).plus(it.subList(idx, it.size))
             }
+            indexToRemove = null
         }
-        indexToRemove = null
     }
 
     fun loadMore(skip: Int, limit: Int) = getFavorites.invoke(Pair(skip, limit)) {

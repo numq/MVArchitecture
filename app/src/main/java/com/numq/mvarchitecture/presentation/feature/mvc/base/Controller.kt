@@ -30,12 +30,16 @@ class Controller constructor(
         it.fold(imageView::onError, imageView::onImage)
     }
 
-    fun undoRemoval(image: Image) = addFavorite.invoke(image) {
-        it.fold(favoritesView::onError, imageView::onImage)
-    }
-
     fun loadMore(skip: Int, limit: Int) = getFavorites.invoke(Pair(skip, limit)) {
         it.fold(favoritesView::onError, favoritesView::onFavorites)
+    }
+
+    fun removeFromFavorites(image: Image) = removeFavorite.invoke(image) {
+        it.fold(favoritesView::onError, favoritesView::onRemoveFavorite)
+    }
+
+    fun undoRemoval(image: Image) = addFavorite.invoke(image) {
+        it.fold(favoritesView::onError, favoritesView::onUndoRemoval)
     }
 
 }

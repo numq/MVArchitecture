@@ -26,7 +26,6 @@ class ImageData constructor(
             Log.d(javaClass.simpleName, it.downloadUrl)
         }
 
-
     override fun checkFavorite(id: String) =
         (dao.getById(id) != null).rightIfNotNull { AppExceptions.Default }
 

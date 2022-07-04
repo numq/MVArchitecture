@@ -35,7 +35,7 @@ fun MvcScreen(
         removeFavorite = controller::removeFavorite,
         favorites = favoritesView.favorites.collectAsState().value,
         loadMore = controller::loadMore,
-        removeFromFavorites = controller::removeFavorite,
+        removeFromFavorites = controller::removeFromFavorites,
         undoRemoval = controller::undoRemoval
     )
 }

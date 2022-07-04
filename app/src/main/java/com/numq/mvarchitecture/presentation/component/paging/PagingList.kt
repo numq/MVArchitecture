@@ -19,10 +19,9 @@ fun <T> PagingList(
     data: List<T>,
     loadData: (Int, Int) -> Unit,
     pageSize: Int,
-    initPageSize: Int = pageSize * 3,
     pagePreload: Int = 2,
     gridMode: Boolean,
-    onItemClick: @Composable (T) -> Unit = {}
+    onItem: @Composable (T) -> Unit = {}
 ) {
 
     val (page, setPage) = remember {
@@ -37,14 +36,19 @@ fun <T> PagingList(
         mutableStateOf(0)
     }
 
-    val skip = initPageSize + page * pageSize
-
-    LaunchedEffect(Unit) {
-        loadData(0, initPageSize)
+    fun processIndex(
+        currentIndex: Int,
+        minAnchor: Int,
+        maxAnchor: Int,
+        pageIncrement: () -> Unit,
+        pageDecrement: () -> Unit
+    ) {
+        if (currentIndex < minAnchor) pageDecrement()
+        if (currentIndex > maxAnchor) pageIncrement()
     }
 
-    LaunchedEffect(page) {
-        loadData(skip, pageSize)
+    LaunchedEffect(Unit, page) {
+        loadData(page * pageSize, pageSize)
     }
 
     LaunchedEffect(currentIndex) {
@@ -60,7 +64,7 @@ fun <T> PagingList(
             itemsIndexed(data) { idx, item ->
                 setCurrentIndex(idx)
                 setMaxIndex(maxOf(maxIndex, idx))
-                onItemClick(item)
+                onItem(item)
             }
         }
     } else {
@@ -68,19 +72,8 @@ fun <T> PagingList(
             itemsIndexed(data) { idx, item ->
                 setCurrentIndex(idx)
                 setMaxIndex(maxOf(maxIndex, idx))
-                onItemClick(item)
+                onItem(item)
             }
         }
     }
-}
-
-fun processIndex(
-    currentIndex: Int,
-    minAnchor: Int,
-    maxAnchor: Int,
-    pageIncrement: () -> Unit,
-    pageDecrement: () -> Unit
-) {
-    if (currentIndex < minAnchor) pageDecrement()
-    if (currentIndex > maxAnchor) pageIncrement()
 }
