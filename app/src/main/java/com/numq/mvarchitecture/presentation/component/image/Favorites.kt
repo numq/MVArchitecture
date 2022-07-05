@@ -8,9 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.GridView
 import androidx.compose.material.icons.rounded.ViewList
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.numq.mvarchitecture.domain.entity.Image
@@ -24,17 +22,15 @@ fun Favorites(
     favorites: List<Image>,
     getFavorites: (Int, Int) -> Unit,
     removeFromFavorites: (Image) -> Unit,
-    undoRemoval: (Image) -> Unit
+    undoRemoval: (Image) -> Unit,
+    gridMode: Boolean,
+    setGridMode: (Boolean) -> Unit
 ) {
 
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val listState = rememberLazyListState()
     val gridState = rememberLazyGridState()
-
-    val (gridMode, setGridMode) = rememberSaveable {
-        mutableStateOf(false)
-    }
 
     val removalSnackbar: (Image) -> Unit = { img ->
         scaffoldState.snackbarHostState.currentSnackbarData?.dismiss()

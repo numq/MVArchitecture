@@ -1,6 +1,8 @@
 package com.numq.mvarchitecture.presentation.component.image
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,6 +30,13 @@ fun ImageScreen(
         val favorites = "favorites"
     }
 
+    /**
+     * This flag should be declared out of nested NavHost to prevent recreation
+     */
+    val (gridMode, setGridMode) = rememberSaveable {
+        mutableStateOf(false)
+    }
+
     NavHost(
         navController,
         startDestination = imageRoute.randomImage
@@ -53,7 +62,8 @@ fun ImageScreen(
                 favorites = favorites,
                 getFavorites = loadMore,
                 removeFromFavorites = removeFromFavorites,
-                undoRemoval = undoRemoval
+                undoRemoval = undoRemoval,
+                gridMode = gridMode, setGridMode = setGridMode
             )
         }
     }
