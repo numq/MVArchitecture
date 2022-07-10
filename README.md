@@ -1,31 +1,16 @@
 # MVArchitecture
-Implementation of _MVC, MVP, MVVM, MVI_ patterns using Clean Architecture and functional reactive programming principles.
+Implementing  architectural patterns (_MVC, MVP, MVVM, MVI_) using Clean Architecture and reactive functional programming principles.
 
 ## About
-The application that allows to get random image from [api](https://picsum.photos/) and add it to favorites.
+An application that allows you to get a random image from [api](https://picsum.photos/) and save it as a favorite.
 
-<details>
-<summary>Demonstration GIF</summary>
-  
 ![App demonstration gif](../main/media/mvarchitecture_demo.gif)
-  
-</details>
 
-<details>
-<summary>Architecture diagram</summary>
-  
 ![Full architecture diagram](../main/media/mvarchitecture_full_scheme.png)
   
 **_*Some details have been omitted to provide a better visibility of the direction of the dependencies._**
   
 </details>
-
-## Topic
-- Clean Architecture
-- MVC
-- MVP
-- MVVM
-- MVI
 
 ## API
 - [Lorem Picsum](https://picsum.photos/) - *Random image API*
