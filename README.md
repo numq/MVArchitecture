@@ -1,5 +1,5 @@
 # MVArchitecture
-Implementing  architectural patterns (_MVC, MVP, MVVM, MVI_) using Clean Architecture and reactive functional programming principles.
+Android Compose architectural patterns (_MVC, MVP, MVVM, MVI_) implementation using Clean Architecture and reactive functional programming principles. 
 
 ## About
 An application that allows you to get a random image from [api](https://picsum.photos/) and save it as a favorite.
