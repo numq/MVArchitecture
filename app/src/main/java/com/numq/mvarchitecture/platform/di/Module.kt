@@ -59,11 +59,11 @@ val data = module {
 }
 
 val interactor = module {
-    single { CheckFavorite(get()) }
-    single { GetRandomImage(get()) }
-    single { GetFavorites(get()) }
-    single { AddFavorite(get()) }
-    single { RemoveFavorite(get()) }
+    factory { CheckFavorite(get()) }
+    factory { GetRandomImage(get()) }
+    factory { GetFavorites(get()) }
+    factory { AddFavorite(get()) }
+    factory { RemoveFavorite(get()) }
 }
 
 val mvc = module {
