@@ -5,12 +5,12 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Done
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -90,7 +90,10 @@ fun NoPermissions(permissions: List<PermissionState>, grant: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text("You must grant these permissions:")
+            Text(
+                "You must grant required permissions",
+                textAlign = TextAlign.Center
+            )
             Spacer(Modifier.height(16.dp))
             Divider()
             Spacer(Modifier.height(32.dp))
@@ -115,8 +118,8 @@ fun NoPermissions(permissions: List<PermissionState>, grant: () -> Unit) {
                 }
             }
             Spacer(Modifier.height(64.dp))
-            IconButton(onClick = { grant() }) {
-                Icon(Icons.Rounded.Settings, "Open settings", modifier = Modifier.size(32.dp))
+            Button(onClick = { grant() }) {
+                Text("I agree")
             }
         }
     }
