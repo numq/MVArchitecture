@@ -2,7 +2,8 @@ package com.numq.mvarchitecture.usecase
 
 import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.domain.repository.ImageRepository
+import com.numq.mvarchitecture.image.CheckFavorite
+import com.numq.mvarchitecture.image.ImageRepository
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

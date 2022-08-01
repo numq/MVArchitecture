@@ -3,8 +3,8 @@ package com.numq.mvarchitecture.data.image
 import androidx.room.Room
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
-import com.numq.mvarchitecture.data.Database
-import com.numq.mvarchitecture.domain.entity.Image
+import com.numq.mvarchitecture.database.Database
+import com.numq.mvarchitecture.image.Image
 import com.numq.mvarchitecture.emptyImage
 import org.junit.After
 import org.junit.Assert.assertEquals

@@ -2,12 +2,12 @@ package com.numq.mvarchitecture.data.domain
 
 import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.data.image.ImageApi
-import com.numq.mvarchitecture.data.image.ImageDao
-import com.numq.mvarchitecture.data.image.ImageData
-import com.numq.mvarchitecture.domain.entity.Image
-import com.numq.mvarchitecture.domain.entity.ImageSize
-import com.numq.mvarchitecture.domain.repository.ImageRepository
+import com.numq.mvarchitecture.image.ImageApi
+import com.numq.mvarchitecture.image.ImageDao
+import com.numq.mvarchitecture.image.ImageData
+import com.numq.mvarchitecture.image.Image
+import com.numq.mvarchitecture.image.ImageSize
+import com.numq.mvarchitecture.image.ImageRepository
 import com.numq.mvarchitecture.emptyImage
 import io.mockk.MockKAnnotations
 import io.mockk.every

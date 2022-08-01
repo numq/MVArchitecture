@@ -1,5 +1,5 @@
 package com.numq.mvarchitecture
 
-import com.numq.mvarchitecture.domain.entity.Image
+import com.numq.mvarchitecture.image.Image
 
 internal val emptyImage = Image("0", "0", 0, 0, "0", "0")
