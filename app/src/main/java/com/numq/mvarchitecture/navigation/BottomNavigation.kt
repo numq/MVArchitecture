@@ -1,6 +1,9 @@
 package com.numq.mvarchitecture.navigation
 
-import androidx.compose.material.*
+import androidx.compose.material.BottomAppBar
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Check
 import androidx.compose.runtime.Composable
@@ -23,9 +26,12 @@ fun BottomNavigation(
                 },
                 selected = isSelected,
                 onClick = {
-                    navController.navigate(it.destination) {
-                        launchSingleTop = true
-                        restoreState = true
+                    if (!isSelected) {
+                        navController.navigate(it.destination) {
+                            popUpTo(0) {
+                                inclusive = true
+                            }
+                        }
                     }
                 })
         }
