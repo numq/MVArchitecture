@@ -1,7 +1,9 @@
 package com.numq.mvarchitecture.image
 
-import android.util.Log
-import arrow.core.*
+import arrow.core.Either
+import arrow.core.flatten
+import arrow.core.left
+import arrow.core.leftIfNull
 import com.numq.mvarchitecture.network.NetworkException
 import com.numq.mvarchitecture.network.NetworkHandler
 import com.numq.mvarchitecture.wrapper.either
@@ -20,12 +22,10 @@ class ImageData constructor(
             service.getRandomImage(size.height, size.width).eitherUri().map { uri ->
                 when (val id = Regex("(?<=id/)(\\d*)").find(uri)) {
                     null -> ImageException.UnavailableService.left()
-                    else -> dao.getById(id.value)?.right() ?: service.getImageDetails(id.value)
+                    else -> dao.getById(id.value)?.wrap() ?: service.getImageDetails(id.value)
                         .either()
                 }
-            }.flatten().tap {
-                Log.d(javaClass.simpleName, it.downloadUrl)
-            }
+            }.flatten()
         }
     ).flatten()
 
