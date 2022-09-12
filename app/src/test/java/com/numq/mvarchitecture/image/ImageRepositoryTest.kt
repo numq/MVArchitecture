@@ -1,11 +1,11 @@
 package com.numq.mvarchitecture.image
 
 import arrow.core.Either
+import arrow.core.left
 import arrow.core.right
+import com.numq.mvarchitecture.network.NetworkException
 import com.numq.mvarchitecture.network.NetworkHandler
 import com.numq.mvarchitecture.utility.emptyImage
-import com.numq.mvarchitecture.wrapper.either
-import com.numq.mvarchitecture.wrapper.eitherUri
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -37,13 +37,19 @@ class ImageRepositoryTest {
     @Test
     fun `should return image`() {
         val size = ImageSize(0, 0)
-        val uri = "uri"
-        every { networkHandler.isConnected } returns true
-        every { service.getRandomImage(any(), any()).eitherUri() } returns uri.right()
-        every { service.getImageDetails(any()).either() } returns emptyImage.right()
+        val uri = "https://test.com/id/0"
 
-        val output = repository.getRandomImage(size)
-        assertIs<Either<Exception, Image>>(output)
+        every { networkHandler.isConnected } returns false
+        assertEquals(NetworkException.Default.left(), repository.getRandomImage(size))
+
+        every { networkHandler.isConnected } returns true
+        every { service.getRandomImage(any(), any()).execute().raw().request.url.toString() } returns uri
+        every { service.getImageDetails(any()).execute().body() } returns emptyImage
+        every { dao.getById(any()) } returns emptyImage
+        with(repository.getRandomImage(size)) {
+            assertIs<Either<Exception, Image>>(this)
+            assertEquals(emptyImage.right(), this)
+        }
     }
 
     @Test
