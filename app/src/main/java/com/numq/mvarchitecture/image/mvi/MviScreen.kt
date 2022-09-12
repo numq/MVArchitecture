@@ -3,7 +3,7 @@ package com.numq.mvarchitecture.image.mvi
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import com.numq.mvarchitecture.error.ShowError
+import com.numq.mvarchitecture.error.ErrorMessage
 import com.numq.mvarchitecture.image.ImageScreen
 import com.numq.mvarchitecture.image.mvi.favorites.FavoritesEffect
 import com.numq.mvarchitecture.image.mvi.favorites.FavoritesEvent
@@ -23,12 +23,12 @@ fun MviScreen(
 ) {
 
     when (val effect = randomImageFeature.effect.collectAsState(null).value) {
-        is RandomImageEffect.ShowError -> ShowError(scaffoldState, effect.exception)
+        is RandomImageEffect.ShowError -> ErrorMessage(effect.exception, scaffoldState)
         else -> Unit
     }
 
     when (val effect = favoritesFeature.effect.collectAsState(null).value) {
-        is FavoritesEffect.ShowError -> ShowError(scaffoldState, effect.exception)
+        is FavoritesEffect.ShowError -> ErrorMessage(effect.exception, scaffoldState)
         else -> Unit
     }
 

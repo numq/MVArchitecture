@@ -3,7 +3,7 @@ package com.numq.mvarchitecture.image.mvvm
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import com.numq.mvarchitecture.error.ShowError
+import com.numq.mvarchitecture.error.ErrorMessage
 import com.numq.mvarchitecture.image.ImageScreen
 import com.numq.mvarchitecture.navigation.Route
 import org.koin.androidx.compose.getViewModel
@@ -17,10 +17,10 @@ fun MvvmScreen(
 ) {
 
     randomImageViewModel.error.collectAsState(null).value?.let {
-        ShowError(scaffoldState, it)
+        ErrorMessage(it, scaffoldState)
     }
     favoritesViewModel.error.collectAsState(null).value?.let {
-        ShowError(scaffoldState, it)
+        ErrorMessage(it, scaffoldState)
     }
 
     ImageScreen(

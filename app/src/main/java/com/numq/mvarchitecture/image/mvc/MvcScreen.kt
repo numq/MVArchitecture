@@ -3,7 +3,7 @@ package com.numq.mvarchitecture.image.mvc
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import com.numq.mvarchitecture.error.ShowError
+import com.numq.mvarchitecture.error.ErrorMessage
 import com.numq.mvarchitecture.image.ImageScreen
 import com.numq.mvarchitecture.image.mvc.base.Controller
 import com.numq.mvarchitecture.image.mvc.base.View
@@ -20,10 +20,10 @@ fun MvcScreen(
 ) {
 
     randomImageView.error.collectAsState(null).value?.let {
-        ShowError(scaffoldState, it)
+        ErrorMessage(it, scaffoldState)
     }
     favoritesView.error.collectAsState(null).value?.let {
-        ShowError(scaffoldState, it)
+        ErrorMessage(it, scaffoldState)
     }
 
     ImageScreen(
