@@ -2,11 +2,11 @@ package com.numq.mvarchitecture.usecase
 
 import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.image.Image
-import com.numq.mvarchitecture.image.ImageSize
-import com.numq.mvarchitecture.image.ImageRepository
-import com.numq.mvarchitecture.emptyImage
 import com.numq.mvarchitecture.image.GetRandomImage
+import com.numq.mvarchitecture.image.Image
+import com.numq.mvarchitecture.image.ImageRepository
+import com.numq.mvarchitecture.image.ImageSize
+import com.numq.mvarchitecture.utility.emptyImage
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK

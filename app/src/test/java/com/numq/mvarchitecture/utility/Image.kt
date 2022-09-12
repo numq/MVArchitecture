@@ -1,4 +1,4 @@
-package com.numq.mvarchitecture
+package com.numq.mvarchitecture.utility
 
 import com.numq.mvarchitecture.image.Image
 

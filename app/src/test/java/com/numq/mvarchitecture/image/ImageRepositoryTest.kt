@@ -1,14 +1,11 @@
-package com.numq.mvarchitecture.data.domain
+package com.numq.mvarchitecture.image
 
 import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.image.ImageApi
-import com.numq.mvarchitecture.image.ImageDao
-import com.numq.mvarchitecture.image.ImageData
-import com.numq.mvarchitecture.image.Image
-import com.numq.mvarchitecture.image.ImageSize
-import com.numq.mvarchitecture.image.ImageRepository
-import com.numq.mvarchitecture.emptyImage
+import com.numq.mvarchitecture.network.NetworkHandler
+import com.numq.mvarchitecture.utility.emptyImage
+import com.numq.mvarchitecture.wrapper.either
+import com.numq.mvarchitecture.wrapper.eitherUri
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -20,7 +17,10 @@ import kotlin.test.assertIs
 
 class ImageRepositoryTest {
 
-    @MockK(relaxed = true)
+    @MockK
+    private lateinit var networkHandler: NetworkHandler
+
+    @MockK
     private lateinit var service: ImageApi
 
     @MockK
@@ -31,12 +31,16 @@ class ImageRepositoryTest {
     @Before
     fun before() {
         MockKAnnotations.init(this)
-        repository = ImageData(service, dao)
+        repository = ImageData(networkHandler, service, dao)
     }
 
     @Test
     fun `should return image`() {
         val size = ImageSize(0, 0)
+        val uri = "uri"
+        every { networkHandler.isConnected } returns true
+        every { service.getRandomImage(any(), any()).eitherUri() } returns uri.right()
+        every { service.getImageDetails(any()).either() } returns emptyImage.right()
 
         val output = repository.getRandomImage(size)
         assertIs<Either<Exception, Image>>(output)
