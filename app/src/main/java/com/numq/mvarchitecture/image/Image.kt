@@ -4,9 +4,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import com.numq.mvarchitecture.constant.AppConstants
+import com.numq.mvarchitecture.database.Database
 
-@Entity(tableName = AppConstants.Database.Images.TABLE_NAME)
+@Entity(tableName = Database.FAVORITES_TABLE)
 data class Image(
     @PrimaryKey
     @SerializedName("id") var id: String,

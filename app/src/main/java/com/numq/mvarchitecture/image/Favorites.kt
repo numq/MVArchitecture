@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.numq.mvarchitecture.constant.AppConstants
 import com.numq.mvarchitecture.paging.PagingList
 import kotlinx.coroutines.launch
 
@@ -70,7 +69,6 @@ fun Favorites(
                 gridState,
                 favorites,
                 getFavorites,
-                AppConstants.Paging.DEFAULT_SIZE,
                 gridMode = gridMode
             ) { img ->
                 FavoriteImageItem(Modifier, img, removalSnackbar)

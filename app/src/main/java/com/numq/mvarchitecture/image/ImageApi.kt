@@ -1,19 +1,24 @@
 package com.numq.mvarchitecture.image
 
-import com.numq.mvarchitecture.constant.AppConstants
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ImageApi {
-    @GET(AppConstants.Api.Image.RANDOM_IMAGE)
+    companion object {
+        const val BASE_URL = "https://picsum.photos"
+        const val RANDOM_IMAGE = "/{width}/{height}"
+        const val IMAGE_DETAILS = "/id/{id}/info"
+    }
+
+    @GET(RANDOM_IMAGE)
     fun getRandomImage(
         @Path("height") height: Int,
         @Path("width") width: Int
     ): Call<ResponseBody>
 
-    @GET(AppConstants.Api.Image.IMAGE_DETAILS)
+    @GET(IMAGE_DETAILS)
     fun getImageDetails(
         @Path("id") id: String
     ): Call<Image>
