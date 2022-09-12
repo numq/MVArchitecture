@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.numq.mvarchitecture.constant.AppConstants
+import com.numq.mvarchitecture.database.Database
 
 @Dao
 interface ImageDao {
@@ -12,13 +12,13 @@ interface ImageDao {
     @Insert
     fun insert(image: Image): Long
 
-    @Query("SELECT * FROM ${AppConstants.Database.Images.TABLE_NAME} WHERE id=:id")
+    @Query("SELECT * FROM ${Database.FAVORITES_TABLE} WHERE id=:id")
     fun getById(id: String): Image?
 
-    @Query("SELECT * FROM ${AppConstants.Database.Images.TABLE_NAME} ORDER BY added_at LIMIT :limit OFFSET :skip")
+    @Query("SELECT * FROM ${Database.FAVORITES_TABLE} ORDER BY added_at LIMIT :limit OFFSET :skip")
     fun getAll(skip: Int, limit: Int): List<Image>
 
-    @Query("DELETE FROM ${AppConstants.Database.Images.TABLE_NAME} WHERE id=:id")
+    @Query("DELETE FROM ${Database.FAVORITES_TABLE} WHERE id=:id")
     fun delete(id: String): Int
 
     @Transaction

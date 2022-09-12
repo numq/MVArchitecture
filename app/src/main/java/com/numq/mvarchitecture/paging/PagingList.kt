@@ -18,7 +18,7 @@ fun <T> PagingList(
     gridState: LazyGridState = rememberLazyGridState(),
     data: List<T>,
     loadData: (Int, Int) -> Unit,
-    pageSize: Int,
+    pageSize: Int = 15,
     pagePreload: Int = 2,
     gridMode: Boolean,
     onItem: @Composable (T) -> Unit = {}
