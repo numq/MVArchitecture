@@ -1,8 +1,10 @@
 package com.numq.mvarchitecture.di
 
+import android.app.Application
+import android.net.ConnectivityManager
+import android.os.Build
 import androidx.room.Room
 import com.google.gson.GsonBuilder
-import com.numq.mvarchitecture.constant.AppConstants
 import com.numq.mvarchitecture.database.Database
 import com.numq.mvarchitecture.image.*
 import com.numq.mvarchitecture.image.mvc.base.Controller
@@ -15,8 +17,10 @@ import com.numq.mvarchitecture.image.mvp.random.RandomImageContract
 import com.numq.mvarchitecture.image.mvp.random.RandomImagePresenter
 import com.numq.mvarchitecture.image.mvvm.FavoritesViewModel
 import com.numq.mvarchitecture.image.mvvm.RandomImageViewModel
+import com.numq.mvarchitecture.network.NetworkHandler
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.bind
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -30,7 +34,7 @@ import com.numq.mvarchitecture.image.mvp.random.RandomImageView as MvpRandomImag
 val application = module {
     single {
         Retrofit.Builder()
-            .baseUrl(AppConstants.Api.Image.URL)
+            .baseUrl(ImageApi.BASE_URL)
             .client(
                 OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor())
                     .callTimeout(5, TimeUnit.SECONDS).build()
@@ -43,15 +47,24 @@ val application = module {
     single {
         Room.databaseBuilder(
             get(),
-            Database::class.java, AppConstants.Database.NAME
+            Database::class.java, Database.NAME
         ).build()
+    }
+    single {
+        NetworkHandler(
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                androidApplication().getSystemService(ConnectivityManager::class.java)
+            } else {
+                androidApplication().getSystemService(Application.CONNECTIVITY_SERVICE) as? ConnectivityManager
+            }
+        )
     }
 }
 
 val data = module {
     single { get<Database>().imageDao() }
     single { ImageService(get()) } bind ImageApi::class
-    single { ImageData(get(), get()) } bind ImageRepository::class
+    single { ImageData(get(), get(), get()) } bind ImageRepository::class
 }
 
 val interactor = module {
