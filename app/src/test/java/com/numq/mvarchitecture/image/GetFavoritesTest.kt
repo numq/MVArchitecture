@@ -1,10 +1,7 @@
-package com.numq.mvarchitecture.usecase
+package com.numq.mvarchitecture.image
 
 import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.image.GetFavorites
-import com.numq.mvarchitecture.image.Image
-import com.numq.mvarchitecture.image.ImageRepository
 import com.numq.mvarchitecture.utility.emptyImage
 import io.mockk.MockKAnnotations
 import io.mockk.every

@@ -1,17 +1,16 @@
-package com.numq.mvarchitecture.data.image
+package com.numq.mvarchitecture.image
 
 import androidx.room.Room
-import androidx.test.filters.SmallTest
+import androidx.test.filters.MediumTest
 import androidx.test.platform.app.InstrumentationRegistry
 import com.numq.mvarchitecture.database.Database
-import com.numq.mvarchitecture.image.Image
 import com.numq.mvarchitecture.emptyImage
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
-@SmallTest
+@MediumTest
 class ImageDaoTest {
 
     private lateinit var database: Database

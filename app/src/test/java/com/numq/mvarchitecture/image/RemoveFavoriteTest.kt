@@ -1,11 +1,10 @@
-package com.numq.mvarchitecture.usecase
+package com.numq.mvarchitecture.image
 
 import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.image.GetRandomImage
 import com.numq.mvarchitecture.image.Image
 import com.numq.mvarchitecture.image.ImageRepository
-import com.numq.mvarchitecture.image.ImageSize
+import com.numq.mvarchitecture.image.RemoveFavorite
 import com.numq.mvarchitecture.utility.emptyImage
 import io.mockk.MockKAnnotations
 import io.mockk.every
@@ -15,29 +14,28 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-class GetRandomImageTest {
+class RemoveFavoriteTest {
 
     private val stub: (Any) -> Any = {}
 
     @MockK
     private lateinit var repository: ImageRepository
-    private lateinit var getRandomImage: GetRandomImage
+    private lateinit var removeFavorite: RemoveFavorite
 
     @Before
     fun init() {
         MockKAnnotations.init(this)
-        getRandomImage = GetRandomImage(repository)
+        removeFavorite = RemoveFavorite(repository)
     }
 
     @Test
-    fun `should return random image`() {
-        val size = ImageSize(0, 0)
+    fun `should remove image to favorites and return updated`() {
         val input = emptyImage
-        every { repository.getRandomImage(size) } returns input.right()
-        getRandomImage.invoke(size) {
+        every { repository.removeFavorite(input) } returns input.copy(isFavorite = false).right()
+        removeFavorite.invoke(input) {
             it.fold(stub) { output ->
                 assertIs<Either<Exception, Image>>(output)
-                assertEquals(input, output)
+                assertEquals(input.copy(isFavorite = false), output)
             }
         }
     }

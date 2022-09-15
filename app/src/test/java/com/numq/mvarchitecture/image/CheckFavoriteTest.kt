@@ -1,4 +1,4 @@
-package com.numq.mvarchitecture.usecase
+package com.numq.mvarchitecture.image
 
 import arrow.core.Either
 import arrow.core.right
