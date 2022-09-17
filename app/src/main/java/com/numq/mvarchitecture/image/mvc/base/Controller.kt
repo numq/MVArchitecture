@@ -12,32 +12,25 @@ class Controller constructor(
     private val removeFavorite: RemoveFavorite
 ) {
 
-    fun randomImage(size: ImageSize) = getRandomImage.invoke(size) {
-        it.fold(imageView::onError, imageView::onImage)
-    }
+    fun randomImage(size: ImageSize) =
+        getRandomImage.invoke(size, imageView::onError, imageView::onImage)
 
-    fun updateImage(id: String) = checkFavorite.invoke(id) {
-        it.fold(imageView::onError, imageView::onImageState)
-    }
+    fun updateImage(id: String) =
+        checkFavorite.invoke(id, imageView::onError, imageView::onImageState)
 
-    fun addFavorite(image: Image) = addFavorite.invoke(image) {
-        it.fold(imageView::onError, imageView::onImage)
-    }
+    fun addFavorite(image: Image) =
+        addFavorite.invoke(image, imageView::onError, imageView::onImage)
 
-    fun removeFavorite(image: Image) = removeFavorite.invoke(image) {
-        it.fold(imageView::onError, imageView::onImage)
-    }
+    fun removeFavorite(image: Image) =
+        removeFavorite.invoke(image, imageView::onError, imageView::onImage)
 
-    fun loadMore(skip: Int, limit: Int) = getFavorites.invoke(Pair(skip, limit)) {
-        it.fold(favoritesView::onError, favoritesView::onFavorites)
-    }
+    fun loadMore(skip: Int, limit: Int) =
+        getFavorites.invoke(Pair(skip, limit), favoritesView::onError, favoritesView::onFavorites)
 
-    fun removeFromFavorites(image: Image) = removeFavorite.invoke(image) {
-        it.fold(favoritesView::onError, favoritesView::onRemoveFavorite)
-    }
+    fun removeFromFavorites(image: Image) =
+        removeFavorite.invoke(image, favoritesView::onError, favoritesView::onRemoveFavorite)
 
-    fun undoRemoval(image: Image) = addFavorite.invoke(image) {
-        it.fold(favoritesView::onError, favoritesView::onUndoRemoval)
-    }
+    fun undoRemoval(image: Image) =
+        addFavorite.invoke(image, favoritesView::onError, favoritesView::onUndoRemoval)
 
 }

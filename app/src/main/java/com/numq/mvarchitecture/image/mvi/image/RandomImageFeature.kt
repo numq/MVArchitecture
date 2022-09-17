@@ -19,38 +19,30 @@ class RandomImageFeature constructor(
 
     override fun handleEvent(event: RandomImageEvent) = when (event) {
         is RandomImageEvent.GetRandomImage -> {
-            getRandomImage.invoke(event.size) {
-                it.fold(onError) { image ->
-                    reduce { oldState ->
-                        oldState.copy(randomImage = image)
-                    }
+            getRandomImage.invoke(event.size, onError) { image ->
+                reduce { oldState ->
+                    oldState.copy(randomImage = image)
                 }
             }
         }
         is RandomImageEvent.UpdateImage -> {
-            checkFavorite.invoke(event.id) {
-                it.fold(onError) { state ->
-                    reduce { oldState ->
-                        oldState.copy(randomImage = oldState.randomImage?.copy(isFavorite = state))
-                    }
+            checkFavorite.invoke(event.id, onError) { state ->
+                reduce { oldState ->
+                    oldState.copy(randomImage = oldState.randomImage?.copy(isFavorite = state))
                 }
             }
         }
         is RandomImageEvent.AddFavorite -> {
-            addFavorite.invoke(event.image) {
-                it.fold(onError) { image ->
-                    reduce { oldState ->
-                        oldState.copy(randomImage = image)
-                    }
+            addFavorite.invoke(event.image, onError) { image ->
+                reduce { oldState ->
+                    oldState.copy(randomImage = image)
                 }
             }
         }
         is RandomImageEvent.RemoveFavorite -> {
-            removeFavorite.invoke(event.image) {
-                it.fold(onError) { image ->
-                    reduce { oldState ->
-                        oldState.copy(randomImage = image)
-                    }
+            removeFavorite.invoke(event.image, onError) { image ->
+                reduce { oldState ->
+                    oldState.copy(randomImage = image)
                 }
             }
         }

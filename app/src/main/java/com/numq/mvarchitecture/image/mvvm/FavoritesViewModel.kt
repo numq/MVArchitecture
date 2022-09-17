@@ -50,15 +50,11 @@ constructor(
         }
     }
 
-    fun loadMore(skip: Int, limit: Int) = getFavorites.invoke(Pair(skip, limit)) {
-        it.fold(onError, onFavorites)
-    }
+    fun loadMore(skip: Int, limit: Int) =
+        getFavorites.invoke(Pair(skip, limit), onError, onFavorites)
 
-    fun removeFavorite(image: Image) = removeFavorite.invoke(image) {
-        it.fold(onError, onRemoveFavorite)
-    }
+    fun removeFavorite(image: Image) = removeFavorite.invoke(image, onError, onRemoveFavorite)
 
-    fun undoRemoval(image: Image) = addFavorite.invoke(image) {
-        it.fold(onError, onUndoRemoval)
-    }
+    fun undoRemoval(image: Image) = addFavorite.invoke(image, onError, onUndoRemoval)
+
 }

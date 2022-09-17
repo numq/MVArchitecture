@@ -11,33 +11,26 @@ class RandomImagePresenter constructor(
 
     override fun randomImage(size: ImageSize) {
         display {
-            getRandomImage.invoke(size) {
-                it.fold(::onError, ::onImage)
-            }
+            getRandomImage.invoke(size, ::onError, ::onImage)
         }
     }
 
     override fun updateImage(id: String) {
         display {
-            checkFavorite.invoke(id) {
-                it.fold(::onError, ::onImageState)
-            }
+            checkFavorite.invoke(id, ::onError, ::onImageState)
         }
     }
 
     override fun addFavorite(image: Image) {
         display {
-            addFavorite.invoke(image) {
-                it.fold(::onError, ::onImage)
-            }
+            addFavorite.invoke(image, ::onError, ::onImage)
         }
     }
 
     override fun removeFavorite(image: Image) {
         display {
-            removeFavorite.invoke(image) {
-                it.fold(::onError, ::onImage)
-            }
+            removeFavorite.invoke(image, ::onError, ::onImage)
         }
     }
+
 }

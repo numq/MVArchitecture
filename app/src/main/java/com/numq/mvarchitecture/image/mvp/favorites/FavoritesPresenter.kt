@@ -13,25 +13,20 @@ class FavoritesPresenter constructor(
 
     override fun loadMore(skip: Int, limit: Int) {
         display {
-            getFavorites.invoke(Pair(skip, limit)) {
-                it.fold(::onError, ::onFavorites)
-            }
+            getFavorites.invoke(Pair(skip, limit), ::onError, ::onFavorites)
         }
     }
 
     override fun removeFavorite(image: Image) {
         display {
-            removeFavorite.invoke(image) {
-                it.fold(::onError, ::onRemoveFavorite)
-            }
+            removeFavorite.invoke(image, ::onError, ::onRemoveFavorite)
         }
     }
 
     override fun undoRemoval(image: Image) {
         display {
-            addFavorite.invoke(image) {
-                it.fold(::onError, ::onUndoRemoval)
-            }
+            addFavorite.invoke(image, ::onError, ::onUndoRemoval)
         }
     }
+
 }

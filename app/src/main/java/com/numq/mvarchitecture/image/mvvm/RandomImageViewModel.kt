@@ -29,21 +29,14 @@ class RandomImageViewModel constructor(
         _randomImage.update { image }
     }
 
-    fun randomImage(size: ImageSize) = getRandomImage(size) {
-        it.fold(onError, onImage)
+    fun randomImage(size: ImageSize) = getRandomImage(size, onError, onImage)
+
+    fun updateImage(id: String) = checkFavorite(id, onError) { state ->
+        _randomImage.update { current -> current?.copy(isFavorite = state) }
     }
 
-    fun updateImage(id: String) = checkFavorite(id) {
-        it.fold(onError) { state ->
-            _randomImage.update { current -> current?.copy(isFavorite = state) }
-        }
-    }
+    fun addFavorite(image: Image) = addFavorite.invoke(image, onError, onImage)
 
-    fun addFavorite(image: Image) = addFavorite.invoke(image) {
-        it.fold(onError, onImage)
-    }
+    fun removeFavorite(image: Image) = removeFavorite.invoke(image, onError, onImage)
 
-    fun removeFavorite(image: Image) = removeFavorite.invoke(image) {
-        it.fold(onError, onImage)
-    }
 }
