@@ -1,8 +1,6 @@
 package com.numq.mvarchitecture.image
 
-import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.utility.emptyImage
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -12,8 +10,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class GetFavoritesTest {
-
-    private val stub: (Any) -> Any = {}
 
     @MockK
     private lateinit var repository: ImageRepository
@@ -30,12 +26,12 @@ class GetFavoritesTest {
         val input = arrayOfNulls<Image>(10).map { emptyImage }
         val (skip, limit) = Pair(0, 10)
         every { repository.getFavorites(skip, limit) } returns input.right()
-        getFavorites.invoke(Pair(skip, limit)) {
-            it.fold(stub) { output ->
-                assertIs<Either<Exception, List<Image>>>(output)
-                assertEquals(input, output)
-            }
-        }
+        getFavorites.invoke(Pair(skip, limit), onException = {
+            assertIs<Exception>(it)
+        }, onResult = {
+            assertIs<List<Image>>(it)
+            assertEquals(input, it)
+        })
     }
 
 }

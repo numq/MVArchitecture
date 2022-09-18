@@ -5,7 +5,6 @@ import arrow.core.left
 import arrow.core.right
 import com.numq.mvarchitecture.network.NetworkException
 import com.numq.mvarchitecture.network.NetworkHandler
-import com.numq.mvarchitecture.utility.emptyImage
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
