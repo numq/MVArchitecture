@@ -1,11 +1,6 @@
 package com.numq.mvarchitecture.image
 
-import arrow.core.Either
 import arrow.core.right
-import com.numq.mvarchitecture.image.Image
-import com.numq.mvarchitecture.image.ImageRepository
-import com.numq.mvarchitecture.image.RemoveFavorite
-import com.numq.mvarchitecture.utility.emptyImage
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -15,8 +10,6 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class RemoveFavoriteTest {
-
-    private val stub: (Any) -> Any = {}
 
     @MockK
     private lateinit var repository: ImageRepository
@@ -32,12 +25,12 @@ class RemoveFavoriteTest {
     fun `should remove image to favorites and return updated`() {
         val input = emptyImage
         every { repository.removeFavorite(input) } returns input.copy(isFavorite = false).right()
-        removeFavorite.invoke(input) {
-            it.fold(stub) { output ->
-                assertIs<Either<Exception, Image>>(output)
-                assertEquals(input.copy(isFavorite = false), output)
-            }
-        }
+        removeFavorite.invoke(input, onException = {
+            assertIs<Exception>(it)
+        }, onResult = {
+            assertIs<Image>(it)
+            assertEquals(input.copy(isFavorite = false), it)
+        })
     }
 
 }
