@@ -1,8 +1,5 @@
 package com.numq.mvarchitecture.di
 
-import android.app.Application
-import android.net.ConnectivityManager
-import android.os.Build
 import androidx.room.Room
 import com.google.gson.GsonBuilder
 import com.numq.mvarchitecture.database.Database
@@ -17,7 +14,7 @@ import com.numq.mvarchitecture.image.mvp.random.RandomImageContract
 import com.numq.mvarchitecture.image.mvp.random.RandomImagePresenter
 import com.numq.mvarchitecture.image.mvvm.FavoritesViewModel
 import com.numq.mvarchitecture.image.mvvm.RandomImageViewModel
-import com.numq.mvarchitecture.network.NetworkHandler
+import com.numq.mvarchitecture.network.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
@@ -50,15 +47,6 @@ val application = module {
             Database::class.java, Database.NAME
         ).build()
     }
-    single {
-        NetworkHandler(
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                androidApplication().getSystemService(ConnectivityManager::class.java)
-            } else {
-                androidApplication().getSystemService(Application.CONNECTIVITY_SERVICE) as? ConnectivityManager
-            }
-        )
-    }
 }
 
 val data = module {
@@ -73,6 +61,12 @@ val interactor = module {
     factory { GetFavorites(get()) }
     factory { AddFavorite(get()) }
     factory { RemoveFavorite(get()) }
+}
+
+val network = module {
+    single { NetworkService(androidApplication()) } bind NetworkApi::class
+    single { NetworkData(get()) } bind NetworkRepository::class
+    factory { GetNetworkStatus(get()) }
 }
 
 val mvc = module {
@@ -106,4 +100,4 @@ val mvi = module {
 }
 
 val features = mvc + mvp + mvvm + mvi
-val appModule = application + data + interactor + features
+val appModule = application + network + data + interactor + features

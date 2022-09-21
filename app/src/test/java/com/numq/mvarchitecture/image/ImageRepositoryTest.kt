@@ -3,8 +3,8 @@ package com.numq.mvarchitecture.image
 import arrow.core.Either
 import arrow.core.left
 import arrow.core.right
+import com.numq.mvarchitecture.network.NetworkApi
 import com.numq.mvarchitecture.network.NetworkException
-import com.numq.mvarchitecture.network.NetworkHandler
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -17,7 +17,7 @@ import kotlin.test.assertIs
 class ImageRepositoryTest {
 
     @MockK
-    private lateinit var networkHandler: NetworkHandler
+    private lateinit var networkService: NetworkApi
 
     @MockK
     private lateinit var service: ImageApi
@@ -30,7 +30,7 @@ class ImageRepositoryTest {
     @Before
     fun before() {
         MockKAnnotations.init(this)
-        repository = ImageData(networkHandler, service, dao)
+        repository = ImageData(networkService, service, dao)
     }
 
     @Test
@@ -38,10 +38,10 @@ class ImageRepositoryTest {
         val size = ImageSize(0, 0)
         val uri = "https://test.com/id/0"
 
-        every { networkHandler.isConnected } returns false
+        every { networkService.isAvailable } returns false
         assertEquals(NetworkException.Default.left(), repository.getRandomImage(size))
 
-        every { networkHandler.isConnected } returns true
+        every { networkService.isAvailable } returns true
         every { service.getRandomImage(any(), any()).execute().raw().request.url.toString() } returns uri
         every { service.getImageDetails(any()).execute().body() } returns emptyImage
         every { dao.getById(any()) } returns emptyImage
