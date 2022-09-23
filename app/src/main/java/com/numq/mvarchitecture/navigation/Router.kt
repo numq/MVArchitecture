@@ -84,10 +84,8 @@ fun AppRouter() {
                         MviScreen(Route.Mvi, scaffoldState)
                     }
                 }
-                networkStatus?.let { status ->
-                    NetworkStatusNotification(status) {
-                        setNetworkStatus(null)
-                    }
+                networkStatus?.let {
+                    NetworkStatusNotification(networkStatus)
                 }
             }
         }
