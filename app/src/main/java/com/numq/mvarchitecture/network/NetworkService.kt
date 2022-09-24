@@ -30,7 +30,6 @@ class NetworkService constructor(
 
     private val request = NetworkRequest.Builder()
         .addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-        .addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET)
         .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
         .build()
 
@@ -63,7 +62,6 @@ class NetworkService constructor(
             connectivityManager.getNetworkCapabilities(network)?.run {
                 when {
                     hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                    hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
                     hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
                     else -> false
                 }
@@ -72,7 +70,6 @@ class NetworkService constructor(
     } else {
         connectivityManager?.activeNetworkInfo?.run {
             when (type) {
-                ConnectivityManager.TYPE_ETHERNET -> true
                 ConnectivityManager.TYPE_MOBILE -> true
                 ConnectivityManager.TYPE_WIFI -> true
                 else -> false
