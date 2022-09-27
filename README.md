@@ -9,8 +9,6 @@ An application that allows you to get a random image from [api](https://picsum.p
 ![Full architecture diagram](../main/media/mvarchitecture_full_scheme.png)
   
 **_*Some details have been omitted to provide a better visibility of the direction of the dependencies._**
-  
-</details>
 
 ## API
 - [Lorem Picsum](https://picsum.photos/) - *Random image API*
