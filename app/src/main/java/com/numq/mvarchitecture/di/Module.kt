@@ -14,7 +14,9 @@ import com.numq.mvarchitecture.image.mvp.random.RandomImageContract
 import com.numq.mvarchitecture.image.mvp.random.RandomImagePresenter
 import com.numq.mvarchitecture.image.mvvm.FavoritesViewModel
 import com.numq.mvarchitecture.image.mvvm.RandomImageViewModel
-import com.numq.mvarchitecture.network.*
+import com.numq.mvarchitecture.network.GetNetworkStatus
+import com.numq.mvarchitecture.network.NetworkApi
+import com.numq.mvarchitecture.network.NetworkRepository
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
@@ -64,8 +66,8 @@ val interactor = module {
 }
 
 val network = module {
-    single { NetworkService(androidApplication()) } bind NetworkApi::class
-    single { NetworkData(get()) } bind NetworkRepository::class
+    single { NetworkApi.Implementation(androidApplication()) } bind NetworkApi::class
+    single { NetworkRepository.Implementation(get()) } bind NetworkRepository::class
     factory { GetNetworkStatus(get()) }
 }
 
