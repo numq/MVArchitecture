@@ -53,8 +53,8 @@ val application = module {
 
 val data = module {
     single { get<Database>().imageDao() }
-    single { ImageService(get()) } bind ImageApi::class
-    single { ImageData(get(), get(), get()) } bind ImageRepository::class
+    single { ImageApi.Implementation(get()) } bind ImageApi::class
+    single { ImageRepository.Implementation(get(), get(), get()) } bind ImageRepository::class
 }
 
 val interactor = module {
