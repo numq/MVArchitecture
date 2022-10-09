@@ -30,7 +30,7 @@ class ImageRepositoryTest {
     @Before
     fun before() {
         MockKAnnotations.init(this)
-        repository = ImageData(networkService, service, dao)
+        repository = ImageRepository.Implementation(networkService, service, dao)
     }
 
     @Test
