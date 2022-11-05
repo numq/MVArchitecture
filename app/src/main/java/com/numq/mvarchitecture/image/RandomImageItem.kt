@@ -37,7 +37,11 @@ fun RandomImageItem(image: Image, painter: Painter) {
                 .alpha(.3f)
         )
         Box(contentAlignment = Alignment.TopEnd) {
-            Image(painter = painter, "", modifier = Modifier.fillMaxWidth())
+            Image(
+                painter = painter, "",
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier.fillMaxWidth()
+            )
             AnimatedVisibility(visible = image.isFavorite) {
                 Icon(
                     Icons.Rounded.Favorite,
